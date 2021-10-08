@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<style>
 			body {
@@ -113,86 +113,94 @@
 		<ul id="errors"></ul>
 		<button id="display">Display Sessions</button>
 		<button id="clear">Clear Sessions</button>
-	</body>
-	<script>
-		class Session {
-			constructor(title = "", sessionTime = new Date(), staff = "") {
-				this.title = title;
-				this.sessionTime = sessionTime;
-				this.staff = staff;
-			}
+		<script>
+			class Session {
+				constructor(title = "", sessionTime = new Date(), staff = "") {
+					this.title = title;
+					this.sessionTime = sessionTime;
+					this.staff = staff;
+				}
 
-			getSessionId() {
-				let days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-				let current = this.sessionTime.getDay();
-				let day = days[current];
-				let hour = this.sessionTime.getHours();
-				return `${day}_${hour}`;
-			}
+				getSessionId() {
+					let days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+					let current = this.sessionTime.getDay();
+					let day = days[current];
+					let hour = this.sessionTime.getHours();
+					return `${day}_${hour}`;
+				}
 
-			renderSession() {
-				let id = this.getSessionId();
-				let titleID = id + "_title";
-				let staffID = id + "_staff";
+				renderSession() {
+					let id = this.getSessionId();
+					let titleID = id + "_title";
+					let staffID = id + "_staff";
 
-				let titleElement = document.createElement("p");
-				titleElement.id = titleID;
-				titleElement.textContent = this.title;
+					if(document.getElementById(titleID)) {
+						let error = document.createElement("li");
+						let existingTitle = document.getElementById(titleID).textContent;
+						error.textContent = existingTitle + " clashes with " + this.title;
+						document.getElementById("errors").appendChild(error);
+					} else {
+						let titleElement = document.createElement("p");
+						titleElement.id = titleID;
+						titleElement.textContent = this.title;
 				
-				let staffElement = document.createElement("p");
-				staffElement.id = staffID;
-				staffElement.textContent = this.staff;
+						let staffElement = document.createElement("p");
+						staffElement.id = staffID;
+						staffElement.textContent = this.staff;
 
-				let session = document.getElementById(id);
+						let session = document.getElementById(id);
 
-				session.appendChild(titleElement);
-				session.appendChild(staffElement);
+						session.appendChild(titleElement);
+						session.appendChild(staffElement);
 
-				session.classList.add("active");
-			}
-		}
-
-		class Timetable {
-			constructor(sessions = []) {
-				this.sessions = sessions;
-			}
-
-			displayTimetable() {
-				this.clearTimetable();
-				this.sessions.map(session => {
-					session.renderSession();
-				});
-			}
-
-			clearTimetable() {
-				this.sessions.map(session => {
-					let id = session.getSessionId();
-					let sessionElement = document.getElementById(id);
-					
-					sessionElement.classList.remove("active");
-
-					let elements = sessionElement.getElementsByTagName("p");
-
-					while(typeof elements[1] !== "undefined") {
-						elements[1].remove();
+						session.classList.add("active");
 					}
-				});
+				}
 			}
-		}
 
-		let session1 = new Session("COMP3006 Lecture", new Date(2021, 9, 8, 11, 30, 30, 0), "David Walker");
-		let session2 = new Session("COMP3000 Lecture", new Date(2021, 9, 4, 14, 30, 30, 0), "Shirley Atkinson");
-		let timetable = new Timetable([session1, session2]);
+			class Timetable {
+				constructor(sessions = []) {
+					this.sessions = sessions;
+				}
 
-		let buttonDisplay = document.getElementById("display");
-		let buttonClear = document.getElementById("clear");
+				displayTimetable() {
+					this.clearTimetable();
+					this.sessions.map(session => {
+						session.renderSession();
+					});
+				}
 
-		buttonDisplay.addEventListener("click", () => {
-			timetable.displayTimetable();
-		});
+				clearTimetable() {
+					this.sessions.map(session => {
+						let id = session.getSessionId();
+						let sessionElement = document.getElementById(id);
+					
+						sessionElement.classList.remove("active");
 
-		buttonClear.addEventListener("click", () => {
-			timetable.clearTimetable();
-		});
-	</script>
+						let elements = sessionElement.getElementsByTagName("p");
+
+						while(typeof elements[1] !== "undefined") {
+							elements[1].remove();
+						}
+					});
+				}
+			}
+
+			let session1 = new Session("COMP3006 Lecture", new Date(2021, 9, 8, 11, 30, 30, 0), "David Walker");
+			let session2 = new Session("COMP3005 Lecture", new Date(2021, 9, 8, 11, 30, 30, 0), "Shirley Atkinson");
+			let session3 = new Session("COMP3000 Lecture", new Date(2021, 9, 4, 14, 30, 30, 0), "Shirley Atkinson");
+			let timetable = new Timetable([session1, session2, session3]);
+
+			let buttonDisplay = document.getElementById("display");
+			let buttonClear = document.getElementById("clear");
+
+			buttonDisplay.addEventListener("click", () => {
+				timetable.displayTimetable();
+			});
+
+			buttonClear.addEventListener("click", () => {
+				timetable.clearTimetable();
+			});
+		</script>
+	</body>
 </html>
