@@ -168,7 +168,11 @@
 				this.sessions.map(session => {
 					let id = session.getSessionId();
 					let sessionElement = document.getElementById(id);
+					
+					sessionElement.classList.remove("active");
+
 					let elements = sessionElement.getElementsByTagName("p");
+
 					while(typeof elements[1] !== "undefined") {
 						elements[1].remove();
 					}
@@ -177,7 +181,7 @@
 		}
 
 		let session1 = new Session("COMP3006 Lecture", new Date(2021, 9, 8, 11, 30, 30, 0), "David Walker");
-		let session2 = new Session("COMP3006 Lecture", new Date(2021, 9, 4, 14, 30, 30, 0), "David Walker");
+		let session2 = new Session("COMP3000 Lecture", new Date(2021, 9, 4, 14, 30, 30, 0), "Shirley Atkinson");
 		let timetable = new Timetable([session1, session2]);
 
 		let buttonDisplay = document.getElementById("display");
