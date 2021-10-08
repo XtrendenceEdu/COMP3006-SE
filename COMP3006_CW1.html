@@ -124,14 +124,14 @@
 
 			getSessionId() {
 				let days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-				let current = sessionTime.getDay();
+				let current = this.sessionTime.getDay();
 				let day = days[current];
-				let hour = sessionTime.getHours();
+				let hour = this.sessionTime.getHours();
 				return `${day}_${hour}`;
 			}
 
 			renderSession() {
-				let id = getSessionId();
+				let id = this.getSessionId();
 				let titleID = id + "_title";
 				let staffID = id + "_staff";
 
@@ -158,13 +158,13 @@
 			}
 
 			displayTimetable() {
-				sessions.map(session => {
+				this.sessions.map(session => {
 					session.renderSession();
 				});
 			}
 
 			clearTimetable() {
-				sessions.map(session => {
+				this.sessions.map(session => {
 					let id = session.getSessionId();
 					let element = document.getElementById(id);
 					let children = element.childNodes.length;
@@ -176,5 +176,19 @@
 				});
 			}
 		}
+
+		let session = new Session("COMP3006 Lecture", new Date(2021, 9, 8, 11, 30, 30, 0), "David Walker");
+		let timetable = new Timetable([session]);
+
+		let buttonDisplay = document.getElementById("display");
+		let buttonClear = document.getElementById("clear");
+
+		buttonDisplay.addEventListener("click", () => {
+			timetable.displayTimetable();
+		});
+
+		buttonClear.addEventListener("click", () => {
+			timetable.clearTimetable();
+		});
 	</script>
 </html>
