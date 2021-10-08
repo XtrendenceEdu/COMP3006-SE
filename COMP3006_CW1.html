@@ -163,6 +163,26 @@
 						}
 					}
 				}
+
+				clearSession() {
+					let sessionElement = document.getElementById(this.getSessionId());
+					
+					if(sessionElement) {
+						sessionElement.classList.remove("active");
+
+						let elements = sessionElement.getElementsByTagName("p");
+
+						for(let i = elements.length - 1; i >= 0; i--) {
+							if(elements[i].id.includes("_title") || elements[i].id.includes("_staff")){
+								elements[i].remove();
+							}
+						}
+
+						// while(typeof elements[1] !== "undefined") {
+						// 	elements[1].remove();
+						// }
+					}
+				}
 			}
 
 			class Timetable {
@@ -179,18 +199,7 @@
 
 				clearTimetable() {
 					this.sessions.map(session => {
-						let id = session.getSessionId();
-						let sessionElement = document.getElementById(id);
-					
-						if(sessionElement) {
-							sessionElement.classList.remove("active");
-
-							let elements = sessionElement.getElementsByTagName("p");
-
-							while(typeof elements[1] !== "undefined") {
-								elements[1].remove();
-							}
-						}
+						session.clearSession();
 					});
 				}
 			}
