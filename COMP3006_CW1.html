@@ -116,15 +116,16 @@
 		<script>
 			class Session {
 				constructor(title = "", sessionTime = new Date(), staff = "") {
+					this.days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+
 					this.title = title;
 					this.sessionTime = sessionTime;
 					this.staff = staff;
 				}
 
 				getSessionId() {
-					let days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 					let current = this.sessionTime.getDay();
-					let day = days[current];
+					let day = this.days[current];
 					let hour = this.sessionTime.getHours();
 					return `${day}_${hour}`;
 				}
@@ -140,20 +141,26 @@
 						error.textContent = existingTitle + " clashes with " + this.title;
 						document.getElementById("errors").appendChild(error);
 					} else {
-						let titleElement = document.createElement("p");
-						titleElement.id = titleID;
-						titleElement.textContent = this.title;
-				
-						let staffElement = document.createElement("p");
-						staffElement.id = staffID;
-						staffElement.textContent = this.staff;
+						if(["sun", "sat"].includes(this.days[this.sessionTime.getDay()])) {
+							let error = document.createElement("li");
+							error.textContent = this.title + " is timetabled at an invalid time";
+							document.getElementById("errors").appendChild(error);
+						} else {
+							let titleElement = document.createElement("p");
+							titleElement.id = titleID;
+							titleElement.textContent = this.title;
+					
+							let staffElement = document.createElement("p");
+							staffElement.id = staffID;
+							staffElement.textContent = this.staff;
 
-						let session = document.getElementById(id);
+							let session = document.getElementById(id);
 
-						session.appendChild(titleElement);
-						session.appendChild(staffElement);
+							session.appendChild(titleElement);
+							session.appendChild(staffElement);
 
-						session.classList.add("active");
+							session.classList.add("active");
+						}
 					}
 				}
 			}
@@ -175,12 +182,14 @@
 						let id = session.getSessionId();
 						let sessionElement = document.getElementById(id);
 					
-						sessionElement.classList.remove("active");
+						if(sessionElement) {
+							sessionElement.classList.remove("active");
 
-						let elements = sessionElement.getElementsByTagName("p");
+							let elements = sessionElement.getElementsByTagName("p");
 
-						while(typeof elements[1] !== "undefined") {
-							elements[1].remove();
+							while(typeof elements[1] !== "undefined") {
+								elements[1].remove();
+							}
 						}
 					});
 				}
@@ -189,7 +198,8 @@
 			let session1 = new Session("COMP3006 Lecture", new Date(2021, 9, 8, 11, 30, 30, 0), "David Walker");
 			let session2 = new Session("COMP3005 Lecture", new Date(2021, 9, 8, 11, 30, 30, 0), "Shirley Atkinson");
 			let session3 = new Session("COMP3000 Lecture", new Date(2021, 9, 4, 14, 30, 30, 0), "Shirley Atkinson");
-			let timetable = new Timetable([session1, session2, session3]);
+			let session4 = new Session("COMP3006 Lab", new Date(2021, 9, 2, 14, 30, 30, 0), "James Hayter");
+			let timetable = new Timetable([session1, session2, session3, session4]);
 
 			let buttonDisplay = document.getElementById("display");
 			let buttonClear = document.getElementById("clear");
