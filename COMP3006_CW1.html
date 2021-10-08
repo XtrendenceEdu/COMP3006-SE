@@ -1,26 +1,114 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+            body {
+                background: #99ffff;
+                font-family: "Verdana";
+            }
+            h1 {
+                font-size: 36px;
+            }
+            .day {
+                border: 1px solid #000;
+                float: left;
+                width: 19%;
+            }
+            .session {
+                background: #dfdfdf;
+                width: 80%;
+                height: 120px;
+                margin: 5%;
+                padding: 5%;
+            }
+            #errors li {
+                color: #ff0000;
+            }
+        </style>
         <title>Timetable Viewer</title>
     </head>
     <body>
         <h1>Timetable Viewer</h1>
         <div id="timetable">
-            <div id="mon">
+            <div id="mon" class="day">
                 <p>Monday</p>
+                <div class="session" id="mon_9">
+                    <p>9am</p>
+                </div>
+                <div class="session" id="mon_11">
+                    <p>11am</p>
+                </div>
+                <div class="session" id="mon_14">
+                    <p>2pm</p>
+                </div>
+                <div class="session" id="mon_16">
+                    <p>4pm</p>
+                </div>
             </div>
-            <div id="tue">
+            <div id="tue" class="day">
                 <p>Tuesday</p>
+                <div class="session" id="tue_9">
+                    <p>9am</p>
+                </div>
+                <div class="session" id="tue_11">
+                    <p>11am</p>
+                </div>
+                <div class="session" id="tue_14">
+                    <p>2pm</p>
+                </div>
+                <div class="session" id="tue_16">
+                    <p>4pm</p>
+                </div>
             </div>
-            <div id="wed">
+            <div id="wed" class="day">
                 <p>Wednesday</p>
+                <div class="session" id="wed_9">
+                    <p>9am</p>
+                </div>
+                <div class="session" id="wed_11">
+                    <p>11am</p>
+                </div>
+                <div class="session" id="wed_14">
+                    <p>2pm</p>
+                </div>
+                <div class="session" id="wed_16">
+                    <p>4pm</p>
+                </div>
             </div>
-            <div id="thu">
+            <div id="thu" class="day">
                 <p>Thursday</p>
+                <div class="session" id="thu_9">
+                    <p>9am</p>
+                </div>
+                <div class="session" id="thu_11">
+                    <p>11am</p>
+                </div>
+                <div class="session" id="thu_14">
+                    <p>2pm</p>
+                </div>
+                <div class="session" id="thu_16">
+                    <p>4pm</p>
+                </div>
             </div>
-            <div id="friday">
+            <div id="fri" class="day">
                 <p>Friday</p>
+                <div class="session" id="fri_9">
+                    <p>9am</p>
+                </div>
+                <div class="session" id="fri_11">
+                    <p>11am</p>
+                </div>
+                <div class="session" id="fri_14">
+                    <p>2pm</p>
+                </div>
+                <div class="session" id="fri_16">
+                    <p>4pm</p>
+                </div>
             </div>
         </div>
+        <h2>Errors</h2>
+        <ul id="errors"></ul>
+        <button id="display">Display Sessions</button>
+        <button id="clear">Clear Sessions</button>
     </body>
 </html>
