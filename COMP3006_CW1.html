@@ -1,114 +1,180 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <style>
-            body {
-                background: #99ffff;
-                font-family: "Verdana";
-            }
-            h1 {
-                font-size: 36px;
-            }
-            .day {
-                border: 1px solid #000;
-                float: left;
-                width: 19%;
-            }
-            .session {
-                background: #dfdfdf;
-                width: 80%;
-                height: 120px;
-                margin: 5%;
-                padding: 5%;
-            }
-            #errors li {
-                color: #ff0000;
-            }
-        </style>
-        <title>Timetable Viewer</title>
-    </head>
-    <body>
-        <h1>Timetable Viewer</h1>
-        <div id="timetable">
-            <div id="mon" class="day">
-                <p>Monday</p>
-                <div class="session" id="mon_9">
-                    <p>9am</p>
-                </div>
-                <div class="session" id="mon_11">
-                    <p>11am</p>
-                </div>
-                <div class="session" id="mon_14">
-                    <p>2pm</p>
-                </div>
-                <div class="session" id="mon_16">
-                    <p>4pm</p>
-                </div>
-            </div>
-            <div id="tue" class="day">
-                <p>Tuesday</p>
-                <div class="session" id="tue_9">
-                    <p>9am</p>
-                </div>
-                <div class="session" id="tue_11">
-                    <p>11am</p>
-                </div>
-                <div class="session" id="tue_14">
-                    <p>2pm</p>
-                </div>
-                <div class="session" id="tue_16">
-                    <p>4pm</p>
-                </div>
-            </div>
-            <div id="wed" class="day">
-                <p>Wednesday</p>
-                <div class="session" id="wed_9">
-                    <p>9am</p>
-                </div>
-                <div class="session" id="wed_11">
-                    <p>11am</p>
-                </div>
-                <div class="session" id="wed_14">
-                    <p>2pm</p>
-                </div>
-                <div class="session" id="wed_16">
-                    <p>4pm</p>
-                </div>
-            </div>
-            <div id="thu" class="day">
-                <p>Thursday</p>
-                <div class="session" id="thu_9">
-                    <p>9am</p>
-                </div>
-                <div class="session" id="thu_11">
-                    <p>11am</p>
-                </div>
-                <div class="session" id="thu_14">
-                    <p>2pm</p>
-                </div>
-                <div class="session" id="thu_16">
-                    <p>4pm</p>
-                </div>
-            </div>
-            <div id="fri" class="day">
-                <p>Friday</p>
-                <div class="session" id="fri_9">
-                    <p>9am</p>
-                </div>
-                <div class="session" id="fri_11">
-                    <p>11am</p>
-                </div>
-                <div class="session" id="fri_14">
-                    <p>2pm</p>
-                </div>
-                <div class="session" id="fri_16">
-                    <p>4pm</p>
-                </div>
-            </div>
-        </div>
-        <h2>Errors</h2>
-        <ul id="errors"></ul>
-        <button id="display">Display Sessions</button>
-        <button id="clear">Clear Sessions</button>
-    </body>
+	<head>
+		<style>
+			body {
+				background: #99ffff;
+				font-family: "Verdana";
+			}
+			h1 {
+				font-size: 36px;
+			}
+			.day {
+				border: 1px solid #000;
+				float: left;
+				width: 19%;
+			}
+			.session {
+				background: #dfdfdf;
+				width: 80%;
+				height: 120px;
+				margin: 5%;
+				padding: 5%;
+			}
+			.session.active {
+				background: #f0fbfc;
+			}
+			#errors li {
+				color: #ff0000;
+			}
+		</style>
+		<title>Timetable Viewer</title>
+	</head>
+	<body>
+		<h1>Timetable Viewer</h1>
+		<div id="timetable">
+			<div id="mon" class="day">
+				<p>Monday</p>
+				<div class="session" id="mon_9">
+					<p>9am</p>
+				</div>
+				<div class="session" id="mon_11">
+					<p>11am</p>
+				</div>
+				<div class="session" id="mon_14">
+					<p>2pm</p>
+				</div>
+				<div class="session" id="mon_16">
+					<p>4pm</p>
+				</div>
+			</div>
+			<div id="tue" class="day">
+				<p>Tuesday</p>
+				<div class="session" id="tue_9">
+					<p>9am</p>
+				</div>
+				<div class="session" id="tue_11">
+					<p>11am</p>
+				</div>
+				<div class="session" id="tue_14">
+					<p>2pm</p>
+				</div>
+				<div class="session" id="tue_16">
+					<p>4pm</p>
+				</div>
+			</div>
+			<div id="wed" class="day">
+				<p>Wednesday</p>
+				<div class="session" id="wed_9">
+					<p>9am</p>
+				</div>
+				<div class="session" id="wed_11">
+					<p>11am</p>
+				</div>
+				<div class="session" id="wed_14">
+					<p>2pm</p>
+				</div>
+				<div class="session" id="wed_16">
+					<p>4pm</p>
+				</div>
+			</div>
+			<div id="thu" class="day">
+				<p>Thursday</p>
+				<div class="session" id="thu_9">
+					<p>9am</p>
+				</div>
+				<div class="session" id="thu_11">
+					<p>11am</p>
+				</div>
+				<div class="session" id="thu_14">
+					<p>2pm</p>
+				</div>
+				<div class="session" id="thu_16">
+					<p>4pm</p>
+				</div>
+			</div>
+			<div id="fri" class="day">
+				<p>Friday</p>
+				<div class="session" id="fri_9">
+					<p>9am</p>
+				</div>
+				<div class="session" id="fri_11">
+					<p>11am</p>
+				</div>
+				<div class="session" id="fri_14">
+					<p>2pm</p>
+				</div>
+				<div class="session" id="fri_16">
+					<p>4pm</p>
+				</div>
+			</div>
+		</div>
+		<h2>Errors</h2>
+		<ul id="errors"></ul>
+		<button id="display">Display Sessions</button>
+		<button id="clear">Clear Sessions</button>
+	</body>
+	<script>
+		class Session {
+			constructor(title = "", sessionTime = new Date(), staff = "") {
+				this.title = title;
+				this.sessionTime = sessionTime;
+				this.staff = staff;
+			}
+
+			getSessionId() {
+				let days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+				let current = sessionTime.getDay();
+				let day = days[current];
+				let hour = sessionTime.getHours();
+				return `${day}_${hour}`;
+			}
+
+			renderSession() {
+				let id = getSessionId();
+				let titleID = id + "_title";
+				let staffID = id + "_staff";
+
+				let titleElement = document.createElement("p");
+				titleElement.id = titleID;
+				titleElement.textContent = this.title;
+				
+				let staffElement = document.createElement("p");
+				staffElement.id = staffID;
+				staffElement.textContent = this.staff;
+
+				let session = document.getElementById(id);
+
+				session.appendChild(titleElement);
+				session.appendChild(staffElement);
+
+				session.classList.add("active");
+			}
+		}
+
+		class Timetable {
+			constructor(sessions = []) {
+				this.sessions = sessions;
+			}
+
+			displayTimetable() {
+				sessions.map(session => {
+					session.renderSession();
+				});
+			}
+
+			clearTimetable() {
+				sessions.map(session => {
+					let id = session.getSessionId();
+					let element = document.getElementById(id);
+					let children = element.childNodes.length;
+					if(children > 1) {
+						for(let i = 1; i < children; i++) {
+							element.childNodes[i].remove();
+						} 
+					}
+				});
+			}
+		}
+	</script>
 </html>
