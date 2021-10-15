@@ -1,0 +1,25 @@
+body {
+	background-color: #99ffff;
+	font-family: "Verdana";
+}
+h1 {
+	font-size: 36px;
+}
+.day {
+	border: 1px solid #000;
+	float: left;
+	width: 19%;
+}
+.session {
+	background: #dfdfdf;
+	width: 80%;
+	height: 120px;
+	margin: 5%;
+	padding: 5%;
+}
+.session.active {
+	background: #f0fbfc;
+}
+#errors li {
+	color: #ff0000;
+}
