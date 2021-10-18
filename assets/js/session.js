@@ -32,37 +32,54 @@ class Session {
 	 */
 	renderSession() {
 		let id = this.getSessionId();
-		let titleID = id + "_title";
-		let staffID = id + "_staff";
+
+		this.titleID = id + "_title";
+		this.staffID = id + "_staff";
 
 		// If a session with the same ID exists, then there's a clash.
-		if(document.getElementById(titleID)) {
-			let error = document.createElement("li");
-			let existingTitle = document.getElementById(titleID).textContent;
-			error.textContent = existingTitle + " clashes with " + this.title;
-			document.getElementById("errors").appendChild(error);
+		if(document.getElementById(this.titleID)) {
+			this.handleError("clash");
+			return;
+		}
+
+		// There are no sessions on Sundays or Saturdays.
+		if(["sun", "sat"].includes(this.days[this.sessionTime.getDay()])) {
+			this.handleError("time");
 		} else {
-			// There are no sessions on Sundays or Saturdays.
-			if(["sun", "sat"].includes(this.days[this.sessionTime.getDay()])) {
-				let error = document.createElement("li");
-				error.textContent = this.title + " is timetabled at an invalid time";
+			let titleElement = document.createElement("p");
+			titleElement.id = this.titleID;
+			titleElement.textContent = this.title;
+				
+			let staffElement = document.createElement("p");
+			staffElement.id = this.staffID;
+			staffElement.textContent = this.staff;
+
+			let session = document.getElementById(id);
+
+			session.appendChild(titleElement);
+			session.appendChild(staffElement);
+
+			session.classList.add("active");
+		}
+	}
+
+	/**
+	 * Handles session clashes and invalid times.
+	 * @param {string} type - The type of error.
+	 * @returns {void}
+	 */
+	handleError(type) {
+		let error = document.createElement("li");
+		switch(type) {
+			case "clash":
+				let existingTitle = document.getElementById(this.titleID).textContent;
+				error.textContent = this.title + " clashes with " + existingTitle;
 				document.getElementById("errors").appendChild(error);
-			} else {
-				let titleElement = document.createElement("p");
-				titleElement.id = titleID;
-				titleElement.textContent = this.title;
-					
-				let staffElement = document.createElement("p");
-				staffElement.id = staffID;
-				staffElement.textContent = this.staff;
-
-				let session = document.getElementById(id);
-
-				session.appendChild(titleElement);
-				session.appendChild(staffElement);
-
-				session.classList.add("active");
-			}
+				break;
+			case "time":
+				error.textContent = this.title + " is scheduled at an invalid time";
+				document.getElementById("errors").appendChild(error);
+				break;
 		}
 	}
 
