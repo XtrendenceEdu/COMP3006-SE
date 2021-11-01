@@ -43,9 +43,7 @@ class Session {
 		}
 
 		// There are no sessions on Sundays or Saturdays.
-		if(["sun", "sat"].includes(this.days[this.sessionTime.getDay()])) {
-			this.handleError("time");
-		} else {
+		if(this.validTime(this.sessionTime)) {
 			let titleElement = document.createElement("p");
 			titleElement.id = this.titleID;
 			titleElement.textContent = this.title;
@@ -60,7 +58,24 @@ class Session {
 			session.appendChild(staffElement);
 
 			session.classList.add("active");
+			
+		} else {
+			this.handleError("time");
 		}
+	}
+
+	/**
+	 * Checks whether or not the session time is valid. If it's on a Saturday or Sunday, or is before 9 AM or after 4 PM, then it's invalid.
+	 * @param {Date} time - The session time.
+	 * @returns {boolean}
+	 */
+	validTime(time) {
+		if(["sat", "sun"].includes(this.days[time.getDay()])) {
+			return false;
+		} else if(time.getHours() < 9 || time.getHours() > 16) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
